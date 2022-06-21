@@ -1,6 +1,4 @@
-let container = document.querySelector(".container");
 let button = document.querySelector(".set-square-num");
-
 button.addEventListener("click", createSquares);
 
 function setNumOfSquares(){
@@ -16,20 +14,21 @@ function setNumOfSquares(){
 
 function createSquares()
 {
-    let num_tiles = setNumOfSquares();
-    for(let rows = 0; rows < num_tiles; ++rows)
-    {
-        let row = document.createElement("div");
-        row.classList.add("row");
+    let board = document.querySelector(".board");
+    let squares = board.querySelectorAll("div");
+    squares.forEach((div) => div.remove());
 
-        for(let squares = 0; squares < num_tiles; ++squares)
-        {
-            let square = document.createElement("div");
-            square.classList.add("square");
-            square.addEventListener("mouseenter", hover);
-            row.appendChild(square);
-        }
-        container.appendChild(row);
+    let num_tiles = setNumOfSquares();
+
+    board.style.gridTemplateColumns = `repeat(${num_tiles} , 1fr)`;
+    board.style.gridTemplateRows = `repeat(${num_tiles} , 1fr)`;
+
+    for(let rows = 0; rows < (num_tiles*num_tiles); ++rows)
+    {
+        let square = document.createElement("div");
+        square.classList.add("square");
+        square.addEventListener("mouseenter", hover);
+        board.appendChild(square);
     }
 }
 
